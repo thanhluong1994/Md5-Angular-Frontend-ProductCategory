@@ -17,12 +17,13 @@ bookForm: FormGroup = new FormGroup({
   author: new FormControl(),
   category: new FormControl()
 });
+   id: number;
   constructor(private bookService: BookService,
               private activatedRouter: ActivatedRoute,
               private router: Router) {
     this.activatedRouter.paramMap.subscribe((paramMap: ParamMap) => {
-      const id = paramMap.get('id');
-      this.getBookById(id);
+      this.id = + paramMap.get('id');
+      this.getBookById(this.id);
     });
   }
   ngOnInit() {
@@ -48,10 +49,9 @@ bookForm: FormGroup = new FormGroup({
     });
   }
 delete(id) {
-    this.bookService.delete(id).subscribe(() => {
-    });
+  this.bookService.delete(id).subscribe(() => {
     this.router.navigateByUrl('/');
-
+    });
 }
 
 }

@@ -21,13 +21,14 @@ export class EditBookComponent implements OnInit {
   author: new FormControl(),
   category: new FormControl()
 });
+  id: number;
   constructor(private bookService: BookService,
               private categoryService: CategoryService,
               private activatedRouter: ActivatedRoute,
               private router: Router) {
     this.activatedRouter.paramMap.subscribe((paramMap: ParamMap) => {
-      const id = +paramMap.get('id');
-      this.getBookId(id);
+       this.id = +paramMap.get('id');
+       this.getBookId(this.id);
     });
   }
 
@@ -62,8 +63,13 @@ export class EditBookComponent implements OnInit {
   }
 
   updateBook() {
-    this.bookService.update(this.idControl, this.bookForm.value).subscribe(() => {
+    const data = this.bookForm.value;
+    const categoryId = data.category;
+    data.category = {
+      id : categoryId
+    };
+    this.bookService.update(this.id, this.bookForm.value).subscribe(() => {
+      this.router.navigateByUrl('/');
     });
-    this.router.navigateByUrl('/');
   }
 }

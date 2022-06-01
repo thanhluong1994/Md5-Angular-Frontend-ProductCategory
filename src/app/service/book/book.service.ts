@@ -17,15 +17,15 @@ export class BookService {
   }
 
   create(data): Observable<Book> {
-    return this.http.post(`${API_URL}/books`, data);
+    return this.http.post<Book>(`${API_URL}/books`, data);
   }
   update(id, data): Observable<Book> {
-    return this.http.put(`${API_URL}/books/${id}`, data);
+    return this.http.put<Book>(`${API_URL}/books/${id}`, data);
   }
   findById(id): Observable<Book> {
     return this.http.get(`${API_URL}/books/${id}`);
   }
   delete(id): Observable<Book> {
-    return this.http.delete(`${API_URL}/books/${id}`);
+    return this.http.delete<Book>(`${API_URL}/books/${id}`);
   }
 }
